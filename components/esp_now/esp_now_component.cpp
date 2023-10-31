@@ -1,6 +1,6 @@
 #include "esp_now_component.h"
 
-#if defined(USE_ESP32)
+#if defined(USE_LIBRETINY)
 #include <esp_now.h>
 #elif defined(USE_ESP8266)
 #include <ESP8266WiFi.h>
@@ -36,7 +36,7 @@ void ESPNowComponent::setup() {
     return;
   }
 
-#elif defined(USE_ESP8266)
+#elif defined(USE_LIBRETINY)
   int err = esp_now_init();
   if (err) {
     ESP_LOGE(TAG, "esp_now_init failed: %d", err);
@@ -84,7 +84,7 @@ void ESPNowComponent::loop() {
 }
 void ESPNowComponent::dump_config() { ESP_LOGCONFIG(TAG, "esp_now:"); }
 
-#ifdef USE_ESP8266
+#ifdef USE_LIBRETINY
 void ESPNowComponent::on_data_received(uint8_t *bssid, uint8_t *data, uint8_t len) {
 #elif defined(USE_ESP32)
 void ESPNowComponent::on_data_received(const uint8_t *bssid, const uint8_t *data, int len) {
